@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:5098/api/servicios";
+const BASE_URL = "https://pruebareact-backend.onrender.com/api/servicios";
 
 export async function getServicios() {
   const res = await fetch(BASE_URL);
