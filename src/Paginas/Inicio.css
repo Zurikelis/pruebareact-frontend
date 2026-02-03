@@ -1,0 +1,163 @@
+/* --- PALETA DE COLORES SOFT INDIGO --- */
+:root {
+  --bg-principal: #f4f5f9;
+  --bg-tarjeta: #ffffff;
+  --indigo-profundo: #434c7d;
+  --indigo-suave: #6c75a3;
+  --lavanda-claro: #eef0f8;
+  --texto-oscuro: #2d2d3a;
+  --texto-suave: #7a7a8c;
+  --borde-sutil: 1px solid #e1e3ea;
+  --sombra-suave: 0 4px 12px rgba(67, 76, 125, 0.08);
+}
+
+body {
+  background-color: var(--bg-principal);
+  color: var(--texto-oscuro);
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+.home-container {
+  max-width: 1000px;
+  margin: 40px auto;
+  padding: 30px;
+}
+
+.titulo-principal {
+  text-align: center;
+  color: var(--indigo-profundo);
+  font-weight: 300;
+  letter-spacing: 1px;
+  margin-bottom: 50px;
+  font-size: 2rem;
+}
+
+/* --- FORMULARIO HORIZONTAL ELEGANTE (ServiceForm) --- */
+.form-container-horizontal {
+  background-color: var(--bg-tarjeta);
+  padding: 20px 30px;
+  border-radius: 16px;
+  border: var(--borde-sutil);
+  box-shadow: var(--sombra-suave);
+  margin-bottom: 40px;
+}
+
+.form-row {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.form-input-elegant {
+  flex: 1;
+  padding: 15px;
+  border: 1px solid transparent;
+  background-color: var(--lavanda-claro);
+  border-radius: 10px;
+  font-size: 0.95rem;
+  color: var(--texto-oscuro);
+  transition: all 0.3s ease;
+}
+
+.description-input {
+    flex: 1.5; 
+}
+
+.form-input-elegant:focus {
+  outline: none;
+  background-color: #fff;
+  border-color: var(--indigo-suave);
+  box-shadow: 0 0 0 3px rgba(108, 117, 163, 0.1);
+}
+
+.btn-guardar-elegant {
+  padding: 15px 30px;
+  background-color: var(--indigo-profundo);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  white-space: nowrap;
+}
+
+.btn-guardar-elegant:hover {
+  background-color: #323a63;
+}
+
+.form-error-msg {
+    color: #c0392b;
+    font-size: 0.9rem;
+    margin-top: 10px;
+    text-align: center;
+}
+
+
+/* --- BUSCADOR MINIMALISTA (SearchBox) --- */
+.search-container {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.search-input {
+  width: 100%;
+  max-width: 500px;
+  padding: 15px 25px;
+  font-size: 1rem;
+  border: var(--borde-sutil);
+  background-color: var(--bg-tarjeta);
+  border-radius: 50px;
+  outline: none;
+  transition: all 0.3s;
+  color: var(--texto-oscuro);
+}
+
+.search-input:focus {
+  border-color: var(--indigo-suave);
+  box-shadow: var(--sombra-suave);
+}
+
+
+/* --- TARJETAS LIMPIAS (ServiceCard) --- */
+.grid-servicios {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 30px;
+}
+
+.card {
+  background: var(--bg-tarjeta);
+  border-radius: 16px;
+  padding: 25px;
+  border: var(--borde-sutil);
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  border-color: var(--indigo-suave);
+  box-shadow: var(--sombra-suave);
+}
+
+.card h3 {
+  margin-top: 0;
+  color: var(--indigo-profundo);
+  font-weight: 500;
+  font-size: 1.2rem;
+}
+
+.card p {
+  color: var(--texto-suave);
+  line-height: 1.6;
+  font-size: 0.95rem;
+}
+
+.no-resultados {
+  text-align: center;
+  color: var(--texto-suave);
+  font-style: italic;
+}
