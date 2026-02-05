@@ -12,7 +12,6 @@ import EditServiceForm from "../Componentes/EditServiceForm";
 function Inicio() {
   const [servicios, setServicios] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
   const [filtro, setFiltro] = useState("");
   const [guardando, setGuardando] = useState(false);
   const [toast, setToast] = useState({ type: "", text: "" });
