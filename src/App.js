@@ -1,12 +1,12 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Home from "./paginas/Home";
+import Inicio from "./Paginas/Inicio";
 import ServicioDetalle from "./Componentes/ServicioDetalle";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Inicio />} />
         <Route path="/servicios/:id" element={<ServicioDetalle />} />
       </Routes>
     </BrowserRouter>
