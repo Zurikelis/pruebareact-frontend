@@ -1,23 +1,23 @@
-import { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { getServicios, crearServicio, actualizarServicio } from "../Servicios/api";
 import ServiceForm from "../Componentes/ServiceForm";
 import Toast from "../Componentes/Toast";
 import SearchBox from "../Componentes/SearchBox";
 import ServiceCard from "../Componentes/ServiceCard"; 
 import Loading from "../Componentes/Loading";
-import './Inicio.css';
 import Modal from "../Componentes/Modal";
 import EditServiceForm from "../Componentes/EditServiceForm";
+import './Inicio.css';
 
 function Inicio() {
   const [servicios, setServicios] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filtro, setFiltro] = useState("");
   const [guardando, setGuardando] = useState(false);
+  const [actualizando, setActualizando] = useState(false);
   const [toast, setToast] = useState({ type: "", text: "" });
   const [editOpen, setEditOpen] = useState(false);
   const [seleccionado, setSeleccionado] = useState(null);
-  const [actualizando, setActualizando] = useState(false);
 
   const showToast = (type, text) => {
     setToast({ type, text });
@@ -27,8 +27,10 @@ function Inicio() {
   const cargar = () => {
     setLoading(true);
     getServicios()
-      .then(setServicios)
-      .catch(() => showToast("No se pudieron cargar los servicios."))
+      .then((res) => {
+        setServicios(res);
+      })
+      .catch(() => showToast("error", "Error de conexión con el servidor."))
       .finally(() => setLoading(false));
   };
 
@@ -40,21 +42,20 @@ function Inicio() {
     try {
       setGuardando(true);
       await crearServicio(payload);
-      showToast("success", "Servicio creado con exito.");
-      await cargar();
+      showToast("success", "Servicio creado con éxito.");
+      cargar(); // Refresca la lista tras crear
       return true;
     } catch (e) {
-      showToast("error", e.message || "Error creando servicio.");
+      showToast("error", "Error al crear servicio.");
       return false;
-    }finally {
+    } finally {
       setGuardando(false);
     }
-
-  }
+  };
 
   const abrirEdicion = (servicio) => {
-  setSeleccionado(servicio);
-  setEditOpen(true);
+    setSeleccionado(servicio);
+    setEditOpen(true);
   };
 
   const guardarCambios = async (payload) => {
@@ -63,28 +64,26 @@ function Inicio() {
       await actualizarServicio(seleccionado.id, payload);
       showToast("success", "Servicio actualizado");
       setEditOpen(false);
-      setSeleccionado(null);
-      cargar();
+      cargar(); // Refresca la lista tras editar
       return true;
     } catch (e) {
-      showToast("error", e.message || "Error actualizando");
+      showToast("error", "Error al actualizar");
       return false;
     } finally {
       setActualizando(false);
     }
   };
 
-  const q = filtro.toLowerCase();
+  // Filtrado por Nombre o Descripción
   const filtrados = servicios.filter((s) =>
-    (s.nombre || "").toLowerCase().includes(q) ||
-    (s.descripcion || "").toLowerCase().includes(q)
+    (s.nombre || "").toLowerCase().includes(filtro.toLowerCase()) ||
+    (s.descripcion || "").toLowerCase().includes(filtro.toLowerCase())
   );
 
   if (loading) return <Loading />;
 
   return (
     <div className="home-container"> 
-      
       <h2 className="titulo-principal">Servicios TI</h2>
 
       <Toast
@@ -98,14 +97,21 @@ function Inicio() {
           <SearchBox value={filtro} onChange={setFiltro} />
       </div>
 
-      {filtrados.length === 0 && <p className="no-resultados">No hay resultados</p>}
+      {filtrados.length === 0 ? (
+        <p className="no-resultados">No se encontraron servicios.</p>
+      ) : (
+        <div className="grid-servicios">
+          {filtrados.map((s) => (
+            <ServiceCard 
+              key={s.id} 
+              servicio={s} // Propiedad 'servicio' (matchea con el Componente)
+              onEdit={abrirEdicion} // Función 'onEdit' (matchea con el Componente)
+            />
+          ))}
+        </div>
+      )}
 
-      <div className="grid-servicios">
-        {filtrados.map((s) => (
-          <ServiceCard key={s.id} servicio={s} onEdit={abrirEdicion} />
-        ))}
-
-        <Modal
+      <Modal
         open={editOpen}
         title="Editar Servicio"
         onClose={() => setEditOpen(false)}
@@ -116,8 +122,6 @@ function Inicio() {
           loading={actualizando}
         />
       </Modal>
-      </div>
-      
     </div>
   );
 }

@@ -1,4 +1,10 @@
-const BASE_URL = "https://pruebareact-backend.onrender.com/api/servicios";
+// Detectar si estamos en localhost
+const isLocal = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
+
+// URL base dinámica
+const BASE_URL = isLocal 
+    ? "http://localhost:5098/api/servicios"                       // URL Local
+    : "https://pruebareact-backend.onrender.com/api/servicios";
 
 export async function getServicios() {
   const res = await fetch(BASE_URL);
